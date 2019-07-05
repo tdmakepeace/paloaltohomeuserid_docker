@@ -1,0 +1,42 @@
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+       
+        <img src="https://www.paloaltonetworks.com/etc/clientlibs/pan/img/logo-blue-medium.png" alt="" style="width:160px;height:90px;">
+      <div class="collapse navbar-collapse" id="navbarsExample03">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/fwlist" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Firewall</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+              <a class="dropdown-item" href="/setup">Firewall Setup</a>
+              <a class="dropdown-item" href="/system">System Status</a>
+              <a class="dropdown-item" href="/reboot/?reboot=0">Reboot the firewall</a>
+                            
+            </div>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/userid" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Devices</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+              <a class="dropdown-item" href="/userid">List Static Devices</a>
+              <a class="dropdown-item" href="/dhcpid">List DHCP Devices</a>
+              <a class="dropdown-item" href="/group">List Device Groups</a>
+              <a class="dropdown-item" href="/fwhostlist">List Hosts pushed to the Firewall</a>
+              <a class="dropdown-item" href="/fwgrouplist">List Groups pushed to the Firewall</a>
+            </div>
+          </li>
+                    <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="/userid" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">EDLs</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown03">
+              <a class="dropdown-item" href="/edl">Manage EDL Lists</a>
+              <a class="dropdown-item" href="/edltest">Test download of a EDL Lists</a>
+              
+              
+            </div>
+          </li>
+          
+        </ul>
+
+      </div>
+    </nav>
