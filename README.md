@@ -30,7 +30,7 @@ _sudo docker run -d -p 5000:5000 -v panhuid_data:/app/PaloAltoHomeUserID tdmakep
 **get contianer id's**  - sudo docker ps<br>
 **stop the container** - sudo docker stop \<container id\><br>
 **start the container** - sudo docker start \<container id\><br>
-**set container to survive a reboot** - sudo docker update --restart=always \<container id\><br>
+**set container to survice a reboot** - sudo docker update --restart=always \<container id\><br>
 
 
 # Disclaimer
