@@ -605,7 +605,124 @@ def register():
 
     return render_template('register.html')
         
+@app.route("/backup")
+def backup():
+
+    return render_template('backup.html')
+
+@app.route("/backuprun")
+def backuprun():
+#    job = int(request.args.get('job', None))
+##    complete = int(request.args.get('complete', None))
+#
+#    if job == 0:
+    myssl = ssl.create_default_context();
+    myssl.check_hostname=False
+    myssl.verify_mode=ssl.CERT_NONE	
+    
+    typeop = "export"
+    cmd = "configuration"
+    cmd1 = "%s?key=%s&type=%s&category=%s" %(base,key,typeop,cmd)
+    req = urllib.request.Request(cmd1, data=None )
+    try:
+        resp_str = urllib.request.urlopen(req ,context=myssl)
+    except urllib.error.URLError as e:
+        f = open("/app/PaloAltoHomeUserID/errorlog.txt", "a")
+        now = datetime.now()
+        logdate = (now.year, now.month, now.day, now.hour, now.minute, now.second)
+        f.write(str(logdate))
+        f.write(' backup failed ')
+        #f.write(e.reason + '\n')
+        flash ('backup Failed', 'error')
+        return redirect(url_for('backup'))
+    else:
+        result = resp_str.read()
         
+        if result:
+            now = datetime.now()
+            datebackup = ('backup'+(str(now.year))+(str(now.month))+(str(now.day))+(str(now.hour))+(str(now.minute))+(str(now.second)))
+#            f = open('/app/PaloAltoHomeUserID/%s.xml' %(str(datebackup)), 'w')
+#            f.write(result+ '\n')
+#            f.close()
+            tree = ET.XML(result)
+            with open('/app/PaloAltoHomeUserID/%s.xml' %(str(datebackup)), 'wb') as f:
+                f.write(ET.tostring(tree))
+            flash ('Configuration downloaded', 'success')
+            
+        else:
+            msg = 'failed registation'
+            return render_template('backup.html', msg=msg, form=form )
+        resp_str.close
+        
+    typeop = "export"
+    cmd = "device-state"
+    cmd1 = "%s?key=%s&type=%s&category=%s" %(base,key,typeop,cmd)
+    req = urllib.request.Request(cmd1, data=None )
+    try:
+        resp_str = urllib.request.urlopen(req ,context=myssl)
+    except urllib.error.URLError as e:
+        f = open("/app/PaloAltoHomeUserID/errorlog.txt", "a")
+        now = datetime.now()
+        logdate = (now.year, now.month, now.day, now.hour, now.minute, now.second)
+        f.write(str(logdate))
+        f.write(' State failed ')
+        #f.write(e.reason + '\n')
+        flash ('State Failed', 'error')
+        return redirect(url_for('backup'))
+    else:
+        result = resp_str.read()
+        
+        if result:
+            now = datetime.now()
+            datebackup = ('state'+(str(now.year))+(str(now.month))+(str(now.day))+(str(now.hour))+(str(now.minute))+(str(now.second)))
+            with open('/app/PaloAltoHomeUserID/%s.tgz' %(str(datebackup)), 'wb') as f:
+                f.write(result)
+            flash ('State downloaded', 'success')
+            
+        else:
+            msg = 'State registation'
+            return render_template('backup.html', msg=msg, form=form )
+        resp_str.close
+        
+        
+        
+
+        
+        
+    return redirect(url_for('register'))
+
+
+
+#        return redirect(url_for('backuprun' , job =(job) ))
+#
+#	  complete = 0
+#	  if job is not None:
+#	    while complete != 1:
+#	    	myssl = ssl.create_default_context();
+#	    	myssl.check_hostname=False
+#	    	myssl.verify_mode=ssl.CERT_NONE
+#	    	typeop = "op"
+#	    	job = str(job)
+#	    	cmd = "<show><jobs><id>" + job + "</id></jobs></show>"
+#	    	cmd1 = "%s?key=%s&type=%s&cmd=%s" %(base,key,typeop,cmd)
+#	    	req = urllib.request.Request(cmd1, data=None )
+#	    	resp_str = urllib.request.urlopen(req ,context=myssl)
+#	    	response = resp_str.read()
+#	    	if response:
+#   				tree = ET.fromstring(response)
+#   				if tree.find('./result/job/status').text == "ACT":
+#   					status = tree.find('./result/job/progress').text + "% complete"
+#   					print ('{0}\r'.format(status)),
+#   					return render_template('upgradedownload.html',  status=status ,version = version , job = job)
+#
+#   				elif tree.find('./result/job/status').text == "FIN":
+#   					complete = 1
+#   					job = 0
+#
+#	    return redirect(url_for('upgradeinstall' ,  version=(version), job =(job) ))
+
+
+                
 @app.route("/upgrade")
 def upgrade():
     myssl = ssl.create_default_context();
@@ -844,7 +961,7 @@ def setupfw():
 
 
     url = "https://%s/api/?type=keygen&user=%s&password=%s" %(ipman,adminuser,adminpwd)
-    print (url)
+#    print (url)
     req = urllib.request.Request(url, data=None )
     try:
         resp_str = urllib.request.urlopen(req ,context=myssl)
@@ -1664,6 +1781,6 @@ class Force(Form):
 if __name__ == '__main__':
     initBackgroundProcs()
     app.secret_key='PaloAltoNetworksUserIDRegister'
-    app.run(debug=False , host=webhost , port=webport)
+    app.run(debug=True , host=webhost , port=webport)
 
     
