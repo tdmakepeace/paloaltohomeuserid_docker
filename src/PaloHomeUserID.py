@@ -607,11 +607,42 @@ def register():
         
 @app.route("/backup")
 def backup():
+    BASE_DIR = '/app/PaloAltoHomeUserID/backups/'
 
-    return render_template('backup.html')
+    # Return 404 if path doesn't exist
+    if not os.path.exists(BASE_DIR):
+        return abort(404)
 
-@app.route("/backuprun")
-def backuprun():
+    # Check if path is a file and serve
+    if os.path.isfile(BASE_DIR):
+        return send_file(BASE_DIR)
+        
+    # Show directory contents
+    files = os.listdir(BASE_DIR)
+        
+    return render_template('backup.html', files=files)
+    
+
+@app.route("/backupdownload/<filename>" , methods=['GET', 'POST'])
+def backupdownload(filename):
+    filedownload = "/app/PaloAltoHomeUserID/backups/%s" %(filename)
+    
+    return send_file(filedownload,  as_attachment=True)
+    
+
+@app.route("/backupdelete/<filename>" , methods=['GET', 'POST'])
+def backupdelete(filename):
+    filedelete = "/app/PaloAltoHomeUserID/backups/%s" %(filename)
+    os.system('rm %s' %(filedelete))
+    
+    return redirect(url_for('backup'))
+
+
+
+
+
+@app.route("/backuplocal")
+def backuplocal():
 #    job = int(request.args.get('job', None))
 ##    complete = int(request.args.get('complete', None))
 #
@@ -645,7 +676,7 @@ def backuprun():
 #            f.write(result+ '\n')
 #            f.close()
             tree = ET.XML(result)
-            with open('/app/PaloAltoHomeUserID/%s.xml' %(str(datebackup)), 'wb') as f:
+            with open('/app/PaloAltoHomeUserID/backups/%s.xml' %(str(datebackup)), 'wb') as f:
                 f.write(ET.tostring(tree))
             flash ('Configuration downloaded', 'success')
             
@@ -675,7 +706,7 @@ def backuprun():
         if result:
             now = datetime.now()
             datebackup = ('state'+(str(now.year))+(str(now.month))+(str(now.day))+(str(now.hour))+(str(now.minute))+(str(now.second)))
-            with open('/app/PaloAltoHomeUserID/%s.tgz' %(str(datebackup)), 'wb') as f:
+            with open('/app/PaloAltoHomeUserID/backups/%s.tgz' %(str(datebackup)), 'wb') as f:
                 f.write(result)
             flash ('State downloaded', 'success')
             
@@ -689,7 +720,7 @@ def backuprun():
 
         
         
-    return redirect(url_for('register'))
+    return redirect(url_for('backup'))
 
 
 

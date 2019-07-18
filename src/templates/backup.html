@@ -9,7 +9,13 @@
      <hr>
      
      <table class="table table-striped">
-          <p><a href="/backuprun" class="btn btn-info">Confirm</a></p>               
+          {% for file in files %}
+                    <tr>
+             <th><a href="/backupdownload/{{ file }}">{{ file }}</a></th>
+             <th><a href="/backupdelete/{{ file }}"" class="btn btn-danger">Delete</a></th>
+          </tr>
+          {% endfor %}
+          <p><a href="/backuplocal" class="btn btn-success">Backup Now</a></p>               
      </table>
      
 {% endblock %}

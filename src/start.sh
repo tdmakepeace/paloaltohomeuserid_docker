@@ -15,6 +15,7 @@ if [ -d "$DIR" ]
         mv /var/lib/mysql/PaloAltoHomeUserID /app/PaloAltoHomeUserID
         ln -s /app/PaloAltoHomeUserID/PaloAltoHomeUserID /var/lib/mysql/PaloAltoHomeUserID
         chmod 777 /app/PaloAltoHomeUserID
+        mkdir /app/PaloAltoHomeUserID/backups
         echo '[mysqld]' >> /etc/mysql/my.cnf
         echo 'bind-address = 0.0.0.0' >> /etc/mysql/my.cnf
         echo 'socket = /var/lib/mysql/mysql.sock' >> /etc/mysql/my.cnf
