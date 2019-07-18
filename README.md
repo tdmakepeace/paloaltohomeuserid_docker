@@ -21,7 +21,7 @@ _sudo docker run -d -p \<Listining Port\>:5000 tdmakepeace/paloaltohomeuserid_<b
 <br><br>
 **Using a Docker Volume** <br>
 Another option is to create and use a docker volume, this is recommended<br>
-_sudo docker volume create panhuid_data_ <br>
+_sudo docker volume create panhuid_data_<br>
 _sudo docker run -d -p 5000:5000 -v panhuid_data:/app/PaloAltoHomeUserID tdmakepeace/paloaltohomeuserid_<br>
 <br>
 
