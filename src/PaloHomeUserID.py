@@ -1812,6 +1812,6 @@ class Force(Form):
 if __name__ == '__main__':
     initBackgroundProcs()
     app.secret_key='PaloAltoNetworksUserIDRegister'
-    app.run(debug=True , host=webhost , port=webport)
+    app.run(debug=False , host=webhost , port=webport)
 
     

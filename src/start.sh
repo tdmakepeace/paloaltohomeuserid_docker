@@ -34,7 +34,8 @@ if [ -d "$DIR" ]
         sleep 5s
         service mysql start
     fi
-    python3 /app/src/PaloHomeUserID.py > /app/PaloAltoHomeUserID/debug.txt  2>&1
+    # python3 /app/src/PaloHomeUserID.py > /app/PaloAltoHomeUserID/debug.txt  2>&1
+    python3 /app/src/PaloHomeUserID.py > /dev/null  2>&1
 fi
 
 
