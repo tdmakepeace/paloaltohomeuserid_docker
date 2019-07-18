@@ -2,7 +2,7 @@
 Palo Alto Networks - Tool for managing DHCP User ID and EDL.
 
 # To deploy
-The following line will deploy the container. <br> <br>
+The following line will deploy the container.<br><br>
 _sudo docker run -d -p \<Listining Port\>:5000 -v \<local folder\>:/app/PaloAltoHomeUserID tdmakepeace/paloaltohomeuserid_<br><br>
 
 The options to edit are the \<Listining Port\> example would be port 5000 and the \<local folder\> <br>
@@ -13,10 +13,9 @@ Example: <br>
 _cd /home/user_<br>
 _mkdir PaloAltoHomeUserID_<br>
 _sudo docker run -d -p 5000:5000 -v /home/user/PaloAltoHomeUserID:/app/PaloAltoHomeUserID tdmakepeace/paloaltohomeuserid_<br>
-
 <br>
-If you do not set a local volume\folder the image will not be persistant over a upgrade or rebuild.<br>
-_sudo docker run -d -p \<Listining Port\>:5000 tdmakepeace/paloaltohomeuserid_<br><br>
+If you do not set a local volume folder the image will not be persistant over a upgrade or rebuild.<br>
+_sudo docker run -d -p 5000:5000 tdmakepeace/paloaltohomeuserid_<br>
 
 <br><br>
 **Using a Docker Volume** <br>
