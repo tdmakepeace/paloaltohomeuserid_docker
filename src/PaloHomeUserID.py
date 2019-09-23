@@ -213,6 +213,11 @@ def collectdhcp():
     else:
         result = resp_str.read()
 
+    try :
+        result
+    except NameError:
+        result = None
+
 # The following lines extract the IP, MAC-Address and Hostname from the firewall
 # result and convert it to variable to be used as part of the SQL insert.
 
@@ -236,8 +241,9 @@ def collectdhcp():
 #        name = child.get('name')
         leasetime = child.find('leasetime')
         if leasetime is None:
-            leasetime = 'Jan  1 00:00:01 1970'
-            leasetime = datetime.strptime(leasetime, '%b %d %H:%M:%S %Y')
+#            leasetime = 'Jan 1 00:00:01 1970'
+#            leasetime = datetime.strptime(leasetime, '%b %d %H:%M:%S %Y').
+            leasetime = datetime.now()
             
         else:
             leasetime =  child.find('leasetime').text
@@ -435,8 +441,7 @@ def createxmlfile():
 # it is possible that the DB contains multiple entries for the same IP, as DHCP 
 # will reuse the IP-addresses. but the MAC addresses as hostnames are unique.
 
-#    state = ("Select IFNULL(DisplayName, Hostname) as name, INET_NTOA(IPaddr) as ip  from DHCP where (Hostname <> 'blank' or DisplayName is not null) and LeaseTime in ( select MAX(LeaseTime)  from DHCP group by IPaddr desc)  and ( LeaseTime = '1970-01-01 00:00:01'  or LeaseTime > (NOW() - INTERVAL %s WEEK)) order by IPaddr;") %(LeaseLife)
-    state = ("SELECT IFNULL(DisplayName, Hostname) AS name, INET_NTOA(IPaddr) AS ip FROM DHCP WHERE (Hostname <> 'blank' OR DisplayName IS NOT NULL)         AND LeaseTime IN (SELECT            MAX(LeaseTime)        FROM            DHCP        GROUP BY IPaddr DESC) AND ( LeaseTime > (NOW() - INTERVAL %s WEEK) and Source = 'fw')  or Source = 'form' or LeaseTime = '1970-01-01 00:00:01' ORDER BY IPaddr;")  %(LeaseLife)
+    state = ("SELECT IFNULL(DisplayName, Hostname) AS name, INET_NTOA(IPaddr) AS ip FROM DHCP WHERE ((Hostname <> 'blank' OR DisplayName IS NOT NULL)   AND LeaseTime IN (SELECT MAX(LeaseTime) FROM DHCP GROUP BY IPaddr DESC) AND ( LeaseTime > (NOW() - INTERVAL %s WEEK) and Source = 'fw')  ) or Source = 'form' ORDER BY IPaddr;")  %(LeaseLife)
     cur = conn.cursor()
     cur.execute(state)
     results = cur.fetchall()
