@@ -71,3 +71,17 @@ CREATE TABLE  IF NOT EXISTS `Group_User_Map`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 99 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 
+-- ----------------------------
+-- Table structure for AdminAccounts
+-- ----------------------------
+-- DROP TABLE IF EXISTS `AdminAccounts`;
+CREATE TABLE IF NOT EXISTS `AdminAccounts` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+  	`username` varchar(50) NOT NULL,
+  	`password` varchar(255) NOT NULL,
+  	`email` varchar(100) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+INSERT INTO `AdminAccounts` (`id`, `username`, `password`, `email`) VALUES (1, 'admin', 'pbkdf2:sha256:50000$8nUothe5$d61eb23f3bcdf602de92b5a86ddb6f6ec398c1cd3231f5ea84968e397995c0d5', 'demo@paloaltonetworks.com');
+

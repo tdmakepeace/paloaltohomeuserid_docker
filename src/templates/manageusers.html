@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class='jumbotron text-center'>
+      <h1>Admin Users registered<br></h1><br>
+</div>      
+     <a class="btn btn-success" href="/addadmin">Add Admin Users</a>
+ 
+     <hr>
+     
+     <table class="table table-striped">
+         <tr>
+             <th>User</th>
+             <th>Email Address</th>
+             <th>Last Update</th>
+             <th></th>
+         </tr>
+         {% for data in results %}
+          <tr>
+             <th>{{data.username}}</th>
+             <th>{{data.email}}</th>
+             <th>{{data.updatedate}}</th>
+             <th><a href="deleteadmin/{{data.id}}" class="btn btn-danger">Delete</a></th>
+          </tr>
+         {% endfor %}
+                  
+     </table>
+     
+{% endblock %}
+ 
