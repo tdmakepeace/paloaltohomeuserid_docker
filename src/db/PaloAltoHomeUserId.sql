@@ -80,6 +80,7 @@ CREATE TABLE IF NOT EXISTS `AdminAccounts` (
   	`username` varchar(50) NOT NULL,
   	`password` varchar(255) NOT NULL,
   	`email` varchar(100) NOT NULL,
+	`updatedate` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
