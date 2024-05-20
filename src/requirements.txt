@@ -4,7 +4,7 @@ Flask==2.3.2
 Flask-MySQLdb==0.2.0
 Flask-WTF==0.14.2
 WTForms==2.2.1
-requests==2.20.0
+requests==2.32.0
 flask_bootstrap==3.3.7.1
 flask_wtf==0.14.2
 flask_login==0.4.1
